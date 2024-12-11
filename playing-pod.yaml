@@ -1,0 +1,113 @@
+# Please edit the object below. Lines beginning with a '#' will be ignored,
+# and an empty file will abort the edit. If an error occurs while saving this file will be
+# reopened with the relevant failures.
+#
+# pods "mn" was not valid:
+# * spec: Forbidden: pod updates may not change fields other than `spec.containers[*].image`,`spec.initContainers[*].image`,`spec.activeDeadlineSeconds`,`spec.tolerations` (only additions to existing tolerations),`spec.terminationGracePeriodSeconds` (allow it to be set to 1 if it was previously negative)
+#   core.PodSpec{
+#   	... // 9 identical fields
+#   	ServiceAccountName:           "default",
+#   	AutomountServiceAccountToken: nil,
+# - 	NodeName:                     "dune-m02",
+# + 	NodeName:                     "",
+#   	SecurityContext:              &{},
+#   	ImagePullSecrets:             nil,
+#   	... // 19 identical fields
+#   }
+
+#
+apiVersion: v1
+kind: Pod
+metadata:
+  creationTimestamp: "2024-12-10T22:43:09Z"
+  labels:
+    run: mn
+  name: mn
+  namespace: default
+  resourceVersion: "187615"
+  uid: aa5edfaf-6800-4f25-8cd1-4a6d5a6c5d62
+spec:
+  containers:
+  - image: nginx
+    imagePullPolicy: Always
+    name: mn
+    resources: {}
+    terminationMessagePath: /dev/termination-log
+    terminationMessagePolicy: File
+    volumeMounts:
+    - mountPath: /var/run/secrets/kubernetes.io/serviceaccount
+      name: kube-api-access-6bs6x
+      readOnly: true
+  nodeName: dune-m02 
+  dnsPolicy: ClusterFirst
+  enableServiceLinks: true
+  preemptionPolicy: PreemptLowerPriority
+  priority: 0
+  restartPolicy: Always
+  schedulerName: default-scheduler
+  securityContext: {}
+  serviceAccount: default
+  serviceAccountName: default
+  terminationGracePeriodSeconds: 30
+  volumes:
+  - name: kube-api-access-6bs6x
+    projected:
+      defaultMode: 420
+      sources:
+      - serviceAccountToken:
+          expirationSeconds: 3607
+          path: token
+      - configMap:
+          items:
+          - key: ca.crt
+            path: ca.crt
+          name: kube-root-ca.crt
+      - downwardAPI:
+          items:
+          - fieldRef:
+              apiVersion: v1
+              fieldPath: metadata.namespace
+            path: namespace
+status:
+  conditions:
+  - lastProbeTime: null
+    lastTransitionTime: "2024-12-10T22:43:21Z"
+    status: "True"
+    type: PodReadyToStartContainers
+  - lastProbeTime: null
+    lastTransitionTime: "2024-12-10T22:43:09Z"
+    status: "True"
+    type: Initialized
+  - lastProbeTime: null
+    lastTransitionTime: "2024-12-10T22:43:21Z"
+    status: "True"
+    type: Ready
+  - lastProbeTime: null
+    lastTransitionTime: "2024-12-10T22:43:21Z"
+    status: "True"
+    type: ContainersReady
+  - lastProbeTime: null
+    lastTransitionTime: "2024-12-10T22:43:09Z"
+    status: "True"
+    type: PodScheduled
+  containerStatuses:
+  - containerID: docker://e124df9c4734adf5d531b6eb204ddc4862b0c49f1d42089b3f7534a38041a566
+    image: nginx:latest
+    imageID: docker-pullable://nginx@sha256:fb197595ebe76b9c0c14ab68159fd3c08bd067ec62300583543f0ebda353b5be
+    lastState: {}
+    name: mn
+    ready: true
+    restartCount: 0
+    started: true
+    state:
+      running:
+        startedAt: "2024-12-10T22:43:20Z"
+  hostIP: 192.168.67.3
+  hostIPs:
+  - ip: 192.168.67.3
+  phase: Running
+  podIP: 10.244.1.4
+  podIPs:
+  - ip: 10.244.1.4
+  qosClass: BestEffort
+  startTime: "2024-12-10T22:43:09Z"
